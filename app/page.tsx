@@ -4,11 +4,11 @@ import {
   TrendingCoinsFallback
 } from "@/components/home/Fallback";
 import TrendingCoins from "@/components/home/TrendingCoins";
-// import { fetcher } from "@/lib/coingecko.actions";
-// import { cn, formatCurrency } from "@/lib/utils";
-// import { TrendingDown, TrendingUp } from "lucide-react";
-// import Image from "next/image";
-// import Link from "next/link";
+// import { fetcher } from '@/lib/coingecko.actions';
+// import { cn, formatCurrency } from '@/lib/utils';
+// import { TrendingDown, TrendingUp } from 'lucide-react';
+// import Image from 'next/image';
+// import Link from 'next/link';
 import { Suspense } from "react";
 
 const Page = async () => {
