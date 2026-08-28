@@ -11,10 +11,10 @@ interface CandlestickChartProps {
   coinId: string;
   height?: number;
   children?: React.ReactNode;
-  mode?: 'historical' | 'live';
+  mode?: "historical" | "live";
   initialPeriod?: Period;
-  liveInterval: '1s' | '1m';
-  setLiveInterval: (interval: '1s' | '1m') => void;
+  liveInterval?: "1s" | "1m";
+  setLiveInterval?: (interval: "1s" | "1m") => void;
 }
 
 interface ConverterProps {

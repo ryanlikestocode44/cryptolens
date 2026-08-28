@@ -4,7 +4,7 @@ import { TrendingDown, TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import DataTable from '@/components/DataTable';
-import { TrendingCoinsFallback } from "@/components/home/Fallback";
+import { TrendingCoinsFallback } from "./Fallback";
 
 const TrendingCoins = async () => {
   let trendingCoins;
