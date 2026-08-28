@@ -17,10 +17,9 @@ const CandlestickChart = ({
   const chartRef = useRef<IChartApi | null>(null);
   const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 
-  const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState(initialPeriod);
   const [ohlcData, setOhlcData] = useState<OHLCData[]>(data ?? []);
-  const [pending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const fetchOHLCData = async (selectedPeriod: Period) => {
     try {
@@ -36,7 +35,7 @@ const CandlestickChart = ({
     } catch (error) {
       console.error("Error fetching OHLC data:", error);
     }
-  }
+  };
 
   const handlePeriodChange = (newPeriod: Period) => {
     if (newPeriod === period) return;
@@ -44,7 +43,7 @@ const CandlestickChart = ({
     startTransition(async () => {
       setPeriod(newPeriod);
       await fetchOHLCData(newPeriod);
-    })
+    });
   };
 
   useEffect(() => {
@@ -59,6 +58,20 @@ const CandlestickChart = ({
     });
 
     const series = chart.addSeries(CandlestickSeries, getCandlestickConfig());
+
+    const convertedToSeconds = ohlcData.map(
+      (item) =>
+        [
+          Math.floor(item[0] / 1000),
+          item[1],
+          item[2],
+          item[3],
+          item[4]
+        ] as OHLCData
+    );
+
+    series.setData(convertOHLCData(convertedToSeconds));
+    chart.timeScale().fitContent();
 
     chartRef.current = chart;
     candleSeriesRef.current = series;
@@ -85,24 +98,40 @@ const CandlestickChart = ({
   useEffect(() => {
     if (!candleSeriesRef.current) return;
 
-    const convertedToSeconds = ohlcData.map(item =>
-      [Math.floor(item[0] / 1000), item[1], item[2], item[3], item[4]] as OHLCData,
+    const convertedToSeconds = ohlcData.map(
+      (item) =>
+        [
+          Math.floor(item[0] / 1000),
+          item[1],
+          item[2],
+          item[3],
+          item[4]
+        ] as OHLCData
     );
 
     const converted = convertOHLCData(convertedToSeconds);
     candleSeriesRef.current.setData(converted);
     chartRef.current?.timeScale().fitContent();
-  }, [ohlcData, period])
+  }, [ohlcData, period]);
 
   return (
     <div id="candlestick-chart">
       <div className="chart-header">
-        <div className="flex-1">{ children }</div>
+        <div className="flex-1">{children}</div>
 
         <div className="button-group">
-          <span className="text-sm mx-2 font-medium text-purple-100/50">Period:</span>
+          <span className="text-sm mx-2 font-medium text-purple-100/50">
+            Period:
+          </span>
           {PERIOD_BUTTONS.map(({ value, label }) => (
-            <button key={value} className={period == value ? "config-button-active" : "config-button"} onClick={() => handlePeriodChange(value)} disabled={loading}>
+            <button
+              key={value}
+              className={
+                period == value ? "config-button-active" : "config-button"
+              }
+              onClick={() => handlePeriodChange(value)}
+              disabled={isPending}
+            >
               {label}
             </button>
           ))}
@@ -111,7 +140,7 @@ const CandlestickChart = ({
 
       <div ref={chartContainerRef} className="chart" style={{ height }} />
     </div>
-  )
+  );
 }
 
 export default CandlestickChart
