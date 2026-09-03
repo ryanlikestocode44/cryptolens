@@ -1,12 +1,12 @@
 'use client'
 
-import { Separator } from '@/components/ui/separator'
-import CandlestickChart from '@/components/CandlestickChart'
-import { useCoinGeckoWebSocket } from '@/hooks/useCoinGeckoWebSocket'
-import { formatCurrency, timeAgo } from '@/lib/utils'
-import DataTable from './DataTable'
-import { useState } from 'react'
-import CoinHeader from './CoinHeader'
+import { useState } from "react";
+import { useCoinGeckoWebSocket } from "@/hooks/useCoinGeckoWebSocket";
+import { formatCurrency, timeAgo } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import CandlestickChart from "@/components/CandlestickChart";
+import DataTable from "@/components/DataTable";
+import CoinHeader from "@/components/CoinHeader";
 
 const LiveDataWrapper = ({ children, coinId, poolId, coin, coinOHLCData }: LiveDataProps) => {
   const [liveInterval, setLiveInterval] = useState<"1s" | "1m">("1s"); // 5 seconds

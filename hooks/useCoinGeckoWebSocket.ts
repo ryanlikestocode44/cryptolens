@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const WS_BASE = `${process.env.NEXT_PUBLIC_COINGECKO_WEBSOCKET_URL}?x_cg_demo_api_key=${process.env.NEXT_PUBLIC_COINGECKO_API_KEY}`;
+const WS_BASE = `${process.env.NEXT_PUBLIC_COINGECKO_JSMASTERY_WEBSOCKET_URL}?x_cg_pro_api_key=${process.env.NEXT_PUBLIC_COINGECKO_JSMASTERY_API_KEY}`;
 
 export const useCoinGeckoWebSocket = ({
   coinId,
@@ -79,6 +79,15 @@ export const useCoinGeckoWebSocket = ({
 
     ws.onclose = () => setIsWsReady(false);
 
+    ws.onerror = (event) => {
+      console.log("WebSocket error:", {
+        event,
+        type: event.type,
+        readyState: ws.readyState,
+        url: ws.url
+      });
+    };
+
     return () => ws.close();
   }, []);
 
@@ -126,7 +135,7 @@ export const useCoinGeckoWebSocket = ({
       subscribe("CGSimplePrice", { coin_id: [coinId], action: "set_tokens" });
     });
 
-    const poolAddress = poolId.replace("_", ":");
+    const poolAddress = poolId.replace("_", ":") ?? "";
 
     if (poolAddress) {
       subscribe("OnchainTrade", {

@@ -27,6 +27,7 @@ const CandlestickChart = ({
   const [isPending, startTransition] = useTransition();
 
   const fetchOHLCData = async (selectedPeriod: Period) => {
+
     try {
       const { days, interval } = PERIOD_CONFIG[selectedPeriod];
       const newData = await fetcher<OHLCData[]>(`/coins/${coinId}/ohlc`, {
