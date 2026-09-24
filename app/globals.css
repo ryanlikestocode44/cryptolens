@@ -653,7 +653,7 @@
     }
 
     .group {
-      @apply bg-dark-500 text-purple-100;
+      @apply gap-2 bg-dark-500 text-purple-100;
     }
   }
 
@@ -663,7 +663,7 @@
     }
 
     .search-item {
-      @apply grid grid-cols-4 gap-4 items-center justify-between data-[selected=true]:bg-dark-400 transition-all !cursor-pointer hover:bg-dark-400 py-3;
+      @apply grid grid-cols-4 gap-4 items-center justify-between data-[selected=true]:bg-dark-400 transition-all cursor-pointer! hover:bg-dark-500! py-3 my-2;
 
       .coin-info {
         @apply flex gap-4 items-center col-span-2;
@@ -681,12 +681,8 @@
         }
       }
 
-      .coin-price {
-        @apply font-semibold text-sm lg:text-base;
-      }
-
       .coin-change {
-        @apply flex gap-1 text-sm lg:text-base items-center font-medium;
+        @apply flex items-center gap-1 font-semibold text-sm lg:text-base;
       }
     }
   }
@@ -758,6 +754,10 @@
   #top-gainers-losers {
     @apply mt-8 w-full;
 
+    .tabs {
+      @apply flex w-full flex-col;
+    }
+
     .tabs-list {
       @apply size-full! p-1! bg-transparent! border-b! border-dark-500! rounded-none!;
     }
@@ -767,7 +767,43 @@
     }
 
     .tabs-content {
-      @apply gap-4! mt-2! md:gap-5! sm:grid-cols-2! lg:grid-cols-1! grid!;
+      @apply mt-2! w-full! grid! gap-4! md:gap-5!;
+    }
+
+    .coin-card {
+      @apply flex items-center justify-between rounded-xl bg-dark-400 p-4;
+    }
+
+    .coin-info {
+      @apply flex items-center gap-3;
+
+      img {
+        @apply size-10 rounded-full;
+      }
+
+      div {
+        @apply flex flex-col;
+      }
+
+      .coin-name {
+        @apply font-semibold text-white;
+      }
+
+      .coin-symbol {
+        @apply text-sm uppercase text-gray-400;
+      }
+    }
+
+    .coin-data {
+      @apply flex flex-col items-end gap-1;
+
+      .coin-price {
+        @apply font-semibold text-white;
+      }
+
+      .coin-change {
+        @apply font-medium;
+      }
     }
   }
 

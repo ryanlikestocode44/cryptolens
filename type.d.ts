@@ -36,7 +36,14 @@ interface Ticker {
   trade_url: string;
 }
 
-type Period = 'daily' | 'weekly' | 'monthly' | '3months' | '6months' | 'yearly' | 'max';
+type Period =
+  | "daily"
+  | "weekly"
+  | "monthly"
+  | "3months"
+  | "6months"
+  | "yearly"
+  | "max";
 
 interface CoinMarketData {
   id: string;
@@ -250,7 +257,7 @@ interface Category {
 interface UseCoinGeckoWebSocketProps {
   coinId: string;
   poolId: string;
-  liveInterval?: '1s' | '1m';
+  liveInterval?: "1s" | "1m";
 }
 
 interface UseCoinGeckoWebSocketReturn {
@@ -279,12 +286,12 @@ interface DataTableProps<T> {
   bodyCellClassName?: string;
 }
 
-type ButtonSize = 'default' | 'sm' | 'lg' | 'icon' | 'icon-sm' | 'icon-lg';
+type ButtonSize = "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
 
 type PaginationLinkProps = {
   isActive?: boolean;
   size?: ButtonSize;
-} & React.ComponentProps<'a'>;
+} & React.ComponentProps<"a">;
 
 interface Pagination {
   currentPage: number;
@@ -296,7 +303,11 @@ interface HeaderProps {
   trendingCoins: TrendingCoin[];
 }
 
-type SearchItemCoin = SearchCoin | TrendingCoin['item'];
+type SearchItemCoin = SearchCoin | TrendingCoin["item"];
+
+interface SearchModalProps {
+  initialTrendingCoins: TrendingCoin[];
+}
 
 interface SearchItemProps {
   coin: SearchItemCoin;
@@ -315,4 +326,22 @@ interface PoolData {
   address: string;
   name: string;
   network: string;
+}
+
+interface CoinGeckoSearchResponse {
+  coins: {
+    id: string;
+    name: string;
+    symbol: string;
+    market_cap_rank?: number;
+    thumb: string;
+    small: string;
+    large: string;
+  }[];
+}
+
+interface CoinGeckoMarketCoin {
+  id: string;
+  current_price: number | null;
+  price_change_percentage_24h: number | null;
 }

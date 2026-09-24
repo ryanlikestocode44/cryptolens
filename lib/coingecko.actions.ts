@@ -72,7 +72,6 @@ export async function getPools(
       console.log(error);
       return fallback;
     }
-
   }
 
   try {
@@ -85,4 +84,67 @@ export async function getPools(
   } catch {
     return fallback;
   }
+}
+
+export async function searchCoins(query: string): Promise<SearchCoin[]> {
+  if (!query.trim()) return [];
+
+  // Step 1: Search coins
+  const searchData = await fetcher<{
+    coins: {
+      id: string;
+      name: string;
+      symbol: string;
+      market_cap_rank: number | null;
+      thumb: string;
+      large: string;
+    }[];
+  }>("search", {
+    query: query.trim()
+  });
+
+  const coins = searchData.coins.slice(0, 10);
+
+  if (!coins.length) return [];
+
+  // Ambil ID untuk request kedua
+  const ids = coins.map((coin) => coin.id).join(",");
+
+  // Step 2: Get market data
+  const marketData = await fetcher<CoinMarketData[]>("coins/markets", {
+    vs_currency: "usd",
+    ids,
+    sparkline: false
+  });
+
+  // Merge search data + market data
+  return coins.map((coin) => {
+    const market = marketData.find((item) => item.id === coin.id);
+
+    return {
+      ...coin,
+      data: {
+        price: market?.current_price,
+        price_change_percentage_24h: market?.price_change_percentage_24h ?? 0
+      }
+    };
+  });
+}
+
+export async function getTopGainersLosers() {
+  const data = await fetcher<{
+    top_gainers: TopGainersLosersResponse[];
+    top_losers: TopGainersLosersResponse[];
+  }>(
+    "coins/top_gainers_losers",
+    {
+      vs_currency: "usd",
+      duration: "24h",
+      price_change_percentage: "1h",
+      top_coins: 1000
+    },
+    300
+  );
+
+  return data;
 }

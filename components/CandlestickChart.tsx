@@ -99,7 +99,7 @@ const CandlestickChart = ({
       chartRef.current = null;
       candleSeriesRef.current = null;
     };
-  }, [height, period]);
+  }, [height, period, ohlcData]);
 
   useEffect(() => {
     if (!candleSeriesRef.current) return;
@@ -179,7 +179,9 @@ const CandlestickChart = ({
               <button
                 key={value}
                 className={
-                  liveInterval == value ? "config-button-active" : "config-button"
+                  liveInterval == value
+                    ? "config-button-active"
+                    : "config-button"
                 }
                 onClick={() => setLiveInterval && setLiveInterval(value)}
                 disabled={isPending}

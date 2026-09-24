@@ -91,7 +91,7 @@ const Coins = async ({ searchParams }: NextPageProps) => {
         <DataTable
           columns={columns}
           data={coinsData}
-          rowKey={coin => coin.id}
+          rowKey={(coin) => coin.id}
           tableClassName="coins-table"
         />
 

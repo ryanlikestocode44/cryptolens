@@ -1,9 +1,10 @@
 import Converter from '@/components/Converter';
 import LiveDataWrapper from '@/components/LiveDataWrapper';
-import { fetcher, getPools } from '@/lib/coingecko.actions';
-import { formatCurrency } from '@/lib/utils';
-import { ArrowUpRight } from 'lucide-react';
-import Link from 'next/link';
+import TopGainersLosers from "@/components/TopGainersLosers";
+import { fetcher, getPools } from "@/lib/coingecko.actions";
+import { formatCurrency } from "@/lib/utils";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 const page = async ({ params }: NextPageProps) => {
   const { id } = await params;
@@ -20,7 +21,9 @@ const page = async ({ params }: NextPageProps) => {
     })
   ]);
 
-  const platform = coinData.asset_platform_id ? coinData.detail_platforms?.[coinData.asset_platform_id] : null;
+  const platform = coinData.asset_platform_id
+    ? coinData.detail_platforms?.[coinData.asset_platform_id]
+    : null;
   const network = platform?.geckoterminal_url.split("/")[3] || null;
   const contractAddress = platform?.contract_address || null;
 
@@ -73,7 +76,11 @@ const page = async ({ params }: NextPageProps) => {
       </section>
 
       <section className="secondary">
-        <Converter symbol={coinData.symbol} icon={coinData.image.small} priceList={coinData.market_data.current_price} />
+        <Converter
+          symbol={coinData.symbol}
+          icon={coinData.image.small}
+          priceList={coinData.market_data.current_price}
+        />
 
         <div className="details">
           <h4>Coin Details</h4>
@@ -98,10 +105,10 @@ const page = async ({ params }: NextPageProps) => {
           </ol>
         </div>
 
-        <p>Top Gainers and Losers</p>
+        <TopGainersLosers />
       </section>
     </main>
   );
-}
+};
 
 export default page
