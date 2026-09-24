@@ -7,11 +7,16 @@ import {
   TrendingCoinsFallback
 } from "@/components/home/Fallback";
 import Categories from "@/components/home/Categories";
+import Introduction from "@/components/home/Introduction";
 
 const Page = async () => {
   return (
     <main className="main-container">
       <section className="home-grid">
+        <Suspense>
+          <Introduction />
+        </Suspense>
+
         <Suspense fallback={<CoinOverviewFallback />}>
           <CoinOverview />
         </Suspense>

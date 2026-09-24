@@ -203,6 +203,42 @@
     }
   }
 
+  #introduction {
+    @apply col-span-2 w-full items-center py-6 md:py-8;
+
+    .eyebrow {
+      @apply mb-3 text-xs font-semibold tracking-widest text-muted-foreground;
+    }
+    
+    .title {
+      @apply text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl;
+    }
+
+    .content {
+      @apply flex max-w-3xl flex-col items-start;
+    }
+
+    .description {
+      @apply mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg;
+    }
+
+    .actions {
+      @apply mt-8 flex flex-wrap items-center gap-3;
+    }
+
+    .button {
+      @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-base font-semibold transition-colors duration-200;
+
+      &.primary {
+        @apply bg-primary text-primary-foreground hover:bg-primary/90;
+      }
+
+      &.secondary {
+        @apply border border-border bg-background text-foreground hover:bg-muted;
+      }
+    }
+  }
+
   #candlestick-chart {
     @apply p-3 mt-5 rounded-lg bg-dark-500;
 
